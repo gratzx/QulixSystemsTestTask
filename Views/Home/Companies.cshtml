@@ -1,0 +1,40 @@
+@model IEnumerable<Company>
+
+<div class="container">
+    <table>
+        <colgroup>
+            <col/>
+            <col/>
+            <col/>
+            <col/>
+        </colgroup>
+        <thead>
+            <tr>
+                <td>Идентификатор</td>
+                <td>Наименование</td>
+                <td>Размер компании</td>
+                <td>Организационно-правовая форма</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in Model)
+            {
+                <tr>
+                    <td>@company.Id</td>
+                    <td>@company.Name</td>
+                    <td>@company.Size</td>
+                    <td>@company.Type</td>
+                    <td>
+                        <a href="@Url.ActionLink(
+                            "DeleteCompany",
+                            "Home",
+                            new { id = company.Id }
+                        )">
+                            Удалить
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

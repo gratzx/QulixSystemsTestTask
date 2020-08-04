@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Employee>
+
+<div class="container">
+    <table>
+        <colgroup>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        <col/>
+        </colgroup>
+        <thead>
+            <tr>
+                <td>Идентификатор</td>
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Отчество</td>
+                <td>Дата приёма на работу</td>
+                <td>Должность</td>
+                <td>Компания</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.Surname</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.Patronymic</td>
+                    <td>@employee.EmploymentDate</td>
+                    <td>@employee.Position</td>
+                    <td>@employee.Company</td>
+                    <td>
+                        <a href="@Url.ActionLink(
+                            "DeleteEmployee",
+                            "Home",
+                            new { id = employee.Id }
+                        )">
+                            Удалить
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

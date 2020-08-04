@@ -2,12 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+using System.Data.SqlClient;
+using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using QulixSystemsTestTask.Services.ExecuteCommand;
+using QulixSystemsTestTask.Services.Queries;
+using QulixSystemsTestTask.Services.Repository;
 
 namespace QulixSystemsTestTask
 {
@@ -20,13 +28,24 @@ namespace QulixSystemsTestTask
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<ICommandText, CommandText>();
+            services.AddTransient<IExecuters, Executers>();
+            services.AddTransient<DbConnection, SqlConnection>(proveider =>
+            {
+                var connectionString = Configuration.GetConnectionString("Qulix");
+                
+                return new SqlConnection(connectionString);
+            });
             services.AddControllersWithViews();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -38,8 +57,10 @@ namespace QulixSystemsTestTask
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+
+                app.UseHttpsRedirection();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -50,7 +71,8 @@ namespace QulixSystemsTestTask
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Employees}/{id?}"
+                );
             });
         }
     }
