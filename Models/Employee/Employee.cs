@@ -7,19 +7,22 @@ namespace QulixSystemsTestTask.Models
     {
         [Key]
         [Required]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Surname { get; set; }
 
-        [Required (AllowEmptyStrings = false)]
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
 
         public string Patronymic { get; set; }
 
         public DateTime? EmploymentDate { get; set; }
 
-        public string Position { get; set; }
+        public long PositionId { get; set; }
+        public string PositionName { get; set; }
 
-        public string Company { get; set; }
+        public long CompanyId { get; set; }
+
+        public string CompanyName { get; set; }
     }
 }

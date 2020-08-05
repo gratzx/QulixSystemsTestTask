@@ -56,5 +56,12 @@ namespace QulixSystemsTestTask.Services.Repository
             );
         }
 
+        ValueTask<IEnumerable<Position>> IRepository.GetAllPositions()
+        {
+            return _executers.ExecuteCommandWithResult(
+                connection => connection.QueryAsync<Position>(_commandText.GetAllPositions)
+            );
+        }
+
     }
 }

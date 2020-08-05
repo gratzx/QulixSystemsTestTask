@@ -7,24 +7,28 @@ namespace QulixSystemsTestTask.Services.Repository
 {
     public interface IRepository
     {
-        public ValueTask<IEnumerable<Employee>> GetAllEmployees();
+        ValueTask<IEnumerable<Employee>> GetAllEmployees();
 
-        public ValueTask<Employee> GetEmployee(long id);
+        ValueTask<Employee> GetEmployee(long id);
 
-        public Task AddEmployee(Employee employee);
+        Task AddEmployee(Employee employee);
 
-        public Task UpdateEmployee(Employee employee);
+        Task UpdateEmployee(Employee employee);
 
-        public Task RemoveEmployee(long id);
+        Task RemoveEmployee(long id);
 
-        public ValueTask<IEnumerable<Company>> GetAllCompanies();
+        ValueTask<IEnumerable<Position>> GetAllPositions();
 
-        public ValueTask<Company> GetCompany(long id);
+        ValueTask<IEnumerable<Company>> GetAllCompanies();
 
-        public Task AddCompany(Company company);
+        ValueTask<Company> GetCompany(long id);
 
-        public Task UpdateCompany(Company company);
+        Task AddCompany(Company company);
 
-        public Task RemoveCompany(long id);
+        Task UpdateCompany(Company company);
+
+        Task RemoveCompany(long id);
+
+        ValueTask<IEnumerable<CompanyType>> GetAllCompanyTypes();
     }
 }

@@ -1,8 +1,18 @@
 ﻿@model IEnumerable<Employee>
 
 <div class="container">
-    <table>
+    <span>
+        <a href="@Url.ActionLink("AddEmployee", "Home")">
+            Добавить сотрудника
+        </a>
+    </span>
+</div>
+
+<div class="container">
+    <table class="table table-sm">
         <colgroup>
+        <col/>
+        <col/>
         <col/>
         <col/>
         <col/>
@@ -20,6 +30,8 @@
                 <td>Дата приёма на работу</td>
                 <td>Должность</td>
                 <td>Компания</td>
+                <td></td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -31,13 +43,22 @@
                     <td>@employee.Name</td>
                     <td>@employee.Patronymic</td>
                     <td>@employee.EmploymentDate</td>
-                    <td>@employee.Position</td>
-                    <td>@employee.Company</td>
+                    <td>@employee.PositionName</td>
+                    <td>@employee.CompanyName</td>
                     <td>
                         <a href="@Url.ActionLink(
-                            "DeleteEmployee",
-                            "Home",
-                            new { id = employee.Id }
+                            action: "UpdateEmployee",
+                            controller: "Home",
+                            values:new { id = employee.Id }
+                        )">
+                            Изменить
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.ActionLink(
+                            action: "DeleteEmployee",
+                            controller: "Home",
+                            values:new { id = employee.Id }
                         )">
                             Удалить
                         </a>

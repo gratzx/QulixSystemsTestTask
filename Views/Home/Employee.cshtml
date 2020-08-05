@@ -1,0 +1,69 @@
+@model EmployeeViewModel
+
+@{
+    bool editMode = ViewBag.editMode ?? false;
+    string actionName = ViewBag.actionName;
+
+    var(employee, companies, positions) = Model;
+}
+
+<div class="container">
+    @ViewData["title"]
+</div>
+
+<div class="contaiener">
+    @using(Html.BeginForm(
+            actionName: actionName,
+            controllerName: "Home",
+            routeValues: null,
+            method: FormMethod.Post,
+            antiforgery: true,
+            htmlAttributes: null
+        )
+    )
+    {
+        <div class="d-flex flex-column align-items-start">
+            @if(editMode)
+            {
+                <input name="Id" type="hidden" value="@employee.Id"/>
+            }
+            <input name="Surname" type="text" placeholder="Фамилия" value="@employee?.Surname"/>
+            <input name="Name" type="text" placeholder="Имя" value="@employee?.Name"/>
+            <input name="Patronymic" type="text" placeholder="Отчество" value="@employee?.Patronymic"/>
+            <input name="EmploymentDate" type="text" placeholder="Время приёма на работу" value="@employee?.EmploymentDate"/>
+            <select name="PositionId">
+                <option value="@employee?.PositionId" selected disabled="@(editMode ? false : true)">
+                    Должность
+                </option>
+                @foreach (var position in positions)
+                {
+                    <option value="@position.Id">
+                        @position.Name
+                    </option>
+                }
+            </select>
+            <select name="CompanyId">
+                <option value="@employee?.CompanyId" selected disabled="@(editMode ? false : true)">
+                    Компания
+                </option>
+                @foreach (var company in companies)
+                {
+                    <option value="@company.Id">
+                        @company.Name
+                    </option>
+                }
+            </select>
+            <div>
+                <input type="submit" value="Сохранить"/>
+                <span>
+                    <a href="@Url.ActionLink(
+                        action: "Employees",
+                        controller: "Home"
+                    )">
+                        Отмена
+                    </a>
+                </span>
+            </div>
+        </div>
+    }
+</div>

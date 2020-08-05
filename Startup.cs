@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-using System.Data.SqlClient;
-using System.Data.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,10 +37,11 @@ namespace QulixSystemsTestTask
             services.AddTransient<DbConnection, SqlConnection>(proveider =>
             {
                 var connectionString = Configuration.GetConnectionString("Qulix");
-                
+
                 return new SqlConnection(connectionString);
             });
             services.AddControllersWithViews();
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());

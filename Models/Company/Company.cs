@@ -8,10 +8,13 @@ namespace QulixSystemsTestTask.Models
         [Required]
         public int Id { get; set; }
 
-        [Required (AllowEmptyStrings = false)]
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
 
         public int Size { get; set; }
-        public string Type { get; set; }
+
+        public long TypeId { get; set; }
+
+        public string TypeName { get; set; }
     }
 }

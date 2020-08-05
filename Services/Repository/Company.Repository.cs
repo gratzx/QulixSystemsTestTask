@@ -55,5 +55,12 @@ namespace QulixSystemsTestTask.Services.Repository
                 )
             );
         }
+
+        ValueTask<IEnumerable<CompanyType>> IRepository.GetAllCompanyTypes()
+        {
+            return _executers.ExecuteCommandWithResult(
+                connection => connection.QueryAsync<CompanyType>(_commandText.GetAllCompanyTypes)
+            );
+        }
     }
 }

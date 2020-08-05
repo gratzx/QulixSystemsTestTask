@@ -1,0 +1,56 @@
+@model CompanyViewModel
+
+@{
+    bool editMode = ViewBag.editMode ?? false;
+    string actionName = ViewBag.actionName;
+
+    var(company, companyTypes) = Model;
+}
+
+<div class="container">
+    @ViewData["title"]
+</div>
+
+<div class="container">
+    @using(Html.BeginForm(
+            actionName: actionName,
+            controllerName: "Home",
+            routeValues: null,
+            method: FormMethod.Post,
+            antiforgery: true,
+            htmlAttributes: null
+        )
+    )
+    {
+        <div class="d-flex flex-column align-items-start">
+            @if(editMode)
+            {
+                <input name="Id" type="hidden" value="@company.Id"/>
+            }
+            <input name="Name" type="text" placeholder="Название компании" value="@company?.Name"/>
+            <input name="Size" type="text" placeholder="Размер компании" value="@company?.Size"/>
+            <select name="TypeId">
+                <option value="@company?.TypeId" selected disabled = "@(editMode ? false : true)">
+                    Тип компании
+                </option>
+                @foreach (var type in companyTypes)
+                {
+                    <option value="@type.Id">
+                        @type.Name
+                    </option>
+                }
+            </select>
+            <div>
+                <input type="submit" value="Сохранить"/>
+                <span>
+                    <a href="@Url.ActionLink(
+                        action: "Companies",
+                        controller: "Home"
+                    )">
+                        Отмена
+                    </a>
+                </span>
+            </div>
+        </div>
+    }
+</div>
