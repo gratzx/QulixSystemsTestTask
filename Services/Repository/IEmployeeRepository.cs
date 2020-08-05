@@ -5,7 +5,7 @@ using QulixSystemsTestTask.Models;
 
 namespace QulixSystemsTestTask.Services.Repository
 {
-    public interface IRepository
+    public interface IEmployeeRepository
     {
         ValueTask<IEnumerable<Employee>> GetAllEmployees();
 
@@ -18,17 +18,5 @@ namespace QulixSystemsTestTask.Services.Repository
         Task RemoveEmployee(long id);
 
         ValueTask<IEnumerable<Position>> GetAllPositions();
-
-        ValueTask<IEnumerable<Company>> GetAllCompanies();
-
-        ValueTask<Company> GetCompany(long id);
-
-        Task AddCompany(Company company);
-
-        Task UpdateCompany(Company company);
-
-        Task RemoveCompany(long id);
-
-        ValueTask<IEnumerable<CompanyType>> GetAllCompanyTypes();
     }
 }

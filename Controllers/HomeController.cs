@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using QulixSystemsTestTask.Models;
 using QulixSystemsTestTask.Services.Repository;
@@ -14,10 +9,16 @@ namespace QulixSystemsTestTask.Controllers
 {
     public partial class HomeController : Controller
     {
-        private readonly IRepository _repository;
-        public HomeController(IRepository repository)
+        private readonly ICompanyRepository _companyRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+
+        public HomeController(
+            ICompanyRepository companyRepository,
+            IEmployeeRepository employeeRepository
+        )
         {
-            _repository = repository;
+            _companyRepository = companyRepository;
+            _employeeRepository = employeeRepository;
         }
 
         public IActionResult Error()

@@ -10,7 +10,7 @@ namespace QulixSystemsTestTask.Controllers
     {
         public async Task<IActionResult> Employees()
         {
-            var employees = await _repository.GetAllEmployees();
+            var employees = await _employeeRepository.GetAllEmployees();
 
             return View(
                 "Employees",
@@ -22,8 +22,8 @@ namespace QulixSystemsTestTask.Controllers
         {
             var employeeViewModel = new EmployeeViewModel
             {
-                Companies = await _repository.GetAllCompanies(),
-                Positions = await _repository.GetAllPositions()
+                Companies = await _companyRepository.GetAllCompanies(),
+                Positions = await _employeeRepository.GetAllPositions()
             };
 
             ViewData["title"] = "Добавить сотрудника";
@@ -43,7 +43,7 @@ namespace QulixSystemsTestTask.Controllers
                 return await AddEmployee();
             }
 
-            await _repository.AddEmployee(employee);
+            await _employeeRepository.AddEmployee(employee);
 
             return await Employees();
         }
@@ -51,9 +51,9 @@ namespace QulixSystemsTestTask.Controllers
         {
             var employeeViewModel = new EmployeeViewModel
             {
-                Employee = await _repository.GetEmployee(id),
-                Companies = await _repository.GetAllCompanies(),
-                Positions = await _repository.GetAllPositions()
+                Employee = await _employeeRepository.GetEmployee(id),
+                Companies = await _companyRepository.GetAllCompanies(),
+                Positions = await _employeeRepository.GetAllPositions()
             };
 
             ViewData["title"] = "Изменить сотрудника";
@@ -71,7 +71,7 @@ namespace QulixSystemsTestTask.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _repository.UpdateEmployee(employee);
+                await _employeeRepository.UpdateEmployee(employee);
             }
 
             return await Employees();
@@ -79,7 +79,7 @@ namespace QulixSystemsTestTask.Controllers
 
         public async Task<IActionResult> DeleteEmployee(long id)
         {
-            await _repository.RemoveEmployee(id);
+            await _employeeRepository.RemoveEmployee(id);
 
             return await Employees();
         }

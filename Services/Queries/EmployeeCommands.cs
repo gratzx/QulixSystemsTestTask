@@ -1,8 +1,8 @@
 namespace QulixSystemsTestTask.Services.Queries
 {
-    public class CommandText : ICommandText
+    public class EmployeeCommands : IEmployeeCommands
     {
-        string ICommandText.GetEmployees => @"
+        string IEmployeeCommands.GetEmployees => @"
             select
                 Employees.Id as Id,
                 Employees.Name as Name,
@@ -24,7 +24,7 @@ namespace QulixSystemsTestTask.Services.Queries
                 on
                     Employees.CompanyId = Companies.Id
         ";
-        string ICommandText.GetEmployeeById => @"
+        string IEmployeeCommands.GetEmployeeById => @"
             select
                 Employees.Id as Id,
                 Employees.Name as Name,
@@ -48,14 +48,14 @@ namespace QulixSystemsTestTask.Services.Queries
             where
                 Employees.Id = @Id
         ";
-        string ICommandText.AddEmployee => @"
+        string IEmployeeCommands.AddEmployee => @"
             insert into
                 [Qulix].[dbo].[Employees]
                 (CompanyId, PositionId, Surname, Name, Patronymic, EmploymentDate)
             values
                 (@CompanyId, @PositionId ,@Surname, @Name, @Patronymic, @EmploymentDate)
         ";
-        string ICommandText.UpdateEmployee => @"
+        string IEmployeeCommands.UpdateEmployee => @"
             update
                 [Qulix].[dbo].[Employees]
             set
@@ -69,63 +69,8 @@ namespace QulixSystemsTestTask.Services.Queries
                 Id = @Id
         ";
 
-        string ICommandText.RemoveEmployeeById => "delete from [Qulix].[dbo].[Employees] where Employees.Id = @id";
+        string IEmployeeCommands.RemoveEmployeeById => "delete from [Qulix].[dbo].[Employees] where Employees.Id = @id";
 
-        string ICommandText.GetAllPositions => "select Positions.Id, Positions.Name from [Qulix].[dbo].[Positions] Positions";
-
-        string ICommandText.GetAllCompanies => @"
-            select
-                Companies.Id as Id,
-                Companies.Name as Name,
-                Companies.Size as Size,
-                CompanyTypes.Id as TypeId,
-                CompanyTypes.Name as TypeName
-            from
-                [Qulix].[dbo].[Companies] Companies
-                left outer join
-                    [Qulix].[dbo].[CompanyTypes] CompanyTypes
-                on
-                    Companies.CompanyTypeId = CompanyTypes.Id
-        ";
-
-        string ICommandText.GetCompanyById => @"
-            select
-                Companies.Id as Id,
-                Companies.Name as Name,
-                Companies.Size as Size,
-                CompanyTypes.Id as TypeId,
-                CompanyTypes.Name as TypeName
-            from
-                [Qulix].[dbo].[Companies] Companies
-                left outer join
-                    [Qulix].[dbo].[CompanyTypes] CompanyTypes
-                on
-                    Companies.CompanyTypeId = CompanyTypes.Id
-            where
-                Companies.Id = @Id
-        ";
-
-        string ICommandText.AddCompany => @"
-            insert into
-                [Qulix].[dbo].[Companies]
-                (CompanyTypeId, Name, Size)
-            values
-                (@TypeId, @Name, @Size)
-        ";
-
-        string ICommandText.UpdateCompany => @"
-            update
-                [Qulix].[dbo].[Companies]
-            set
-                CompanyTypeId = @TypeId,
-                Name = @Name,
-                Size = @Size
-            where
-                Id = @Id
-        ";
-
-        string ICommandText.RemoveCompanyById => "delete from [Qulix].[dbo].[Companies] where Companies.Id = @id";
-
-        string ICommandText.GetAllCompanyTypes => "select Types.Id, Types.Name from [Qulix].[dbo].[CompanyTypes] Types";
+        string IEmployeeCommands.GetAllPositions => "select Positions.Id, Positions.Name from [Qulix].[dbo].[Positions] Positions";
     }
 }

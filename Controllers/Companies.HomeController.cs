@@ -10,7 +10,7 @@ namespace QulixSystemsTestTask.Controllers
     {
         public async Task<IActionResult> Companies()
         {
-            var companies = await _repository.GetAllCompanies();
+            var companies = await _companyRepository.GetAllCompanies();
 
             return View(
                 "Companies",
@@ -22,7 +22,7 @@ namespace QulixSystemsTestTask.Controllers
         {
             var companyViewModel = new CompanyViewModel
             {
-                CompanyTypes = await _repository.GetAllCompanyTypes()
+                CompanyTypes = await _companyRepository.GetAllCompanyTypes()
             };
 
             ViewData["title"] = "Добавить компанию";
@@ -42,7 +42,7 @@ namespace QulixSystemsTestTask.Controllers
                 return await AddCompany();
             }
 
-            await _repository.AddCompany(company);
+            await _companyRepository.AddCompany(company);
 
             return await Companies();
         }
@@ -51,8 +51,8 @@ namespace QulixSystemsTestTask.Controllers
         {
             var companyViewModel = new CompanyViewModel
             {
-                Company = await _repository.GetCompany(id),
-                CompanyTypes = await _repository.GetAllCompanyTypes()
+                Company = await _companyRepository.GetCompany(id),
+                CompanyTypes = await _companyRepository.GetAllCompanyTypes()
             };
 
             ViewData["title"] = "Изменить компанию";
@@ -71,7 +71,7 @@ namespace QulixSystemsTestTask.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _repository.UpdateCompany(company);
+                await _companyRepository.UpdateCompany(company);
             }
 
             return await Companies();
@@ -79,7 +79,7 @@ namespace QulixSystemsTestTask.Controllers
 
         public async Task<IActionResult> DeleteCompany(long id)
         {
-            await _repository.RemoveCompany(id);
+            await _companyRepository.RemoveCompany(id);
 
             return await Companies();
         }

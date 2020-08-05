@@ -31,8 +31,10 @@ namespace QulixSystemsTestTask
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IRepository, Repository>();
-            services.AddTransient<ICommandText, CommandText>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IEmployeeCommands, EmployeeCommands>();
+            services.AddTransient<ICompanyCommands, CompanyCommands>();
             services.AddTransient<IExecuters, Executers>();
             services.AddTransient<DbConnection, SqlConnection>(proveider =>
             {
